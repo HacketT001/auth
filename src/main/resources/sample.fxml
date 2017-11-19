@@ -25,7 +25,7 @@
             <Button layoutX="151.0" layoutY="146.0" mnemonicParsing="false" onAction="#registerOnClick" prefHeight="31.0" prefWidth="110.0" text="Регистрация" />
             <Label layoutX="22.0" layoutY="74.0" text="Password" />
             <Label layoutX="20.0" layoutY="14.0" text="E-mail" />
-            <Label fx:id="msgLabel" layoutX="8.0" layoutY="183.0" prefHeight="21.0" prefWidth="250" textFill="RED" />
+            <Label fx:id="msgLabel" layoutX="8.0" layoutY="183.0" prefHeight="21.0" prefWidth="270" textFill="RED" />
          </children>
       </AnchorPane>
    </children>

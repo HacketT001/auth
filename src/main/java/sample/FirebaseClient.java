@@ -27,12 +27,12 @@ public class FirebaseClient {
 
     private void initFirebaseClient() throws IOException {
 
-        File googleCredentials = new File("./src/main/java/sample/tb-firebase.json");
+        File googleCredentials = new File("./src/main/java/sample/tbbot_googlecredentials.json");
         FileInputStream serviceAccount = new FileInputStream(googleCredentials);
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://telegrambot-15be3.firebaseio.com/")
+                .setDatabaseUrl("https://telegrambot-1bedb.firebaseio.com/")
                 .build();
 
         FirebaseApp.initializeApp(options);
@@ -102,7 +102,7 @@ public class FirebaseClient {
         return null;
     }
 
-    public static boolean checkInternetConnection() {
+    public static boolean checkInternetConnection() throws Exception {
         Boolean result = false;
         HttpURLConnection con = null;
         try {
@@ -110,7 +110,7 @@ public class FirebaseClient {
             con.setRequestMethod("HEAD");
             result = (con.getResponseCode() == HttpURLConnection.HTTP_OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new AuthException("Проверьте соединение с интернетом");
         } finally {
             if (con != null) {
                 try {

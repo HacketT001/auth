@@ -52,6 +52,8 @@ public class Controller {
 
         {
             msgLabel.setText("Ошибка регистрации.");
+        } catch (Exception e) {
+            msgLabel.setText(e.getMessage());
         }
 
     }
@@ -70,6 +72,8 @@ public class Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (AuthException e) {
+            msgLabel.setText(e.getMessage());
+        } catch (Exception e) {
             msgLabel.setText(e.getMessage());
         }
     }
