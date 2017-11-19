@@ -10,8 +10,14 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
+import java.util.prefs.Preferences;
 
 public class Controller {
+
+    Preferences prefs = Preferences.userNodeForPackage(Controller.class);
+    final String prefPass = "PREF_PASSWORD";
+    final String prefMail = "PREF_EMAIL";
+
     @FXML
     private Label msgLabel;
     @FXML
@@ -30,12 +36,27 @@ public class Controller {
     }
 
     @FXML
+    public void initialize(){
+        String email;
+        String pass;
+
+        if((email = prefs.get(prefMail,"")) != null)
+            emailField.setText(email);
+        if((pass = prefs.get(prefPass,"")) != null)
+            passField.setText(pass);
+
+    }
+
+
+    @FXML
     private void registerOnClick() {
 
         try {
             if (FirebaseClient.checkInternetConnection()) {
                 fb.createUser(emailField.getText(), passField.getText());
                 msgLabel.setText("Регистрация прошла успешно");
+                prefs.put(prefPass,passField.getText());
+                prefs.put(prefMail,emailField.getText());
             } else msgLabel.setText("Проверьте соединение с интернетом");
         } catch (
                 ExecutionException e)
@@ -66,7 +87,8 @@ public class Controller {
 
 
                     msgLabel.setText("Loggined");// ВОТ ОТСЮДА НАДО ПЕРЕЙТИ НА НОВУЮ АКТИВНОСТЬ
-
+                    prefs.put(prefPass,passField.getText());
+                    prefs.put(prefMail,emailField.getText());
 
                 } else msgLabel.setText("Проверьте соединение с интернетом");
         } catch (InterruptedException e) {
