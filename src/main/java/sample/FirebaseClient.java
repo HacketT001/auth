@@ -74,33 +74,27 @@ public class FirebaseClient {
 
     public String getHWID() {
 
+        InetAddress ip;
         try {
-            InetAddress ip = InetAddress.getLocalHost();
+            ip = InetAddress.getLocalHost();
+            System.out.println("IP address : " + ip.getHostAddress());
+            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+            byte[] mac = network.getHardwareAddress();
+            System.out.print("MAC address : ");
 
             StringBuilder sb = new StringBuilder();
-            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
-            while (networks.hasMoreElements()) {
-                NetworkInterface network = networks.nextElement();
-                byte[] mac = network.getHardwareAddress();
-
-                if (mac != null) {
-                    System.out.print("Current MAC address : ");
-
-
-                    for (int i = 0; i < mac.length; i++) {
-                        sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-                    }
-                    System.out.println(sb.toString());
-                }
+            for (int i = 0; i < mac.length; i++) {
+                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
             }
+            System.out.println(sb.toString());
             return sb.toString();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (SocketException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     public static boolean checkInternetConnection() throws Exception {
         Boolean result = false;
